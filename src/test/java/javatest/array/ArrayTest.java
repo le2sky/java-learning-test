@@ -77,6 +77,14 @@ class ArrayTest {
     }
 
     @Test
+    void collection_toArray() {
+        List<Integer> targetIntList = Arrays.asList(1, 2, 3);
+        Integer[] ints = targetIntList.toArray(new Integer[0]);
+        assertThat(Arrays.stream(ints).reduce(0, Integer::sum))
+            .isEqualTo(6);
+    }
+
+    @Test
     void 부분_배열을_복사하기() {
         int[] source = {1, 2, 3, 4, 5};
         int[] ints1 = Arrays.copyOfRange(source, 2, source.length);
