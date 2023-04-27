@@ -2,8 +2,11 @@ package javatest.sort;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class ArraysSortTest {
@@ -34,5 +37,44 @@ class ArraysSortTest {
         Integer[] integers = new Integer[]{6, 1, 2, 3, 4, 5, 7};
         Arrays.sort(integers, 1, 4, Collections.reverseOrder());
         assertThat(integers).isEqualTo(new Integer[]{6, 3, 2, 1, 4, 5, 7});
+    }
+
+    @Test
+    void comparator를_이용해서_sort_커스터마이징_길이가_같다면_사전순() {
+        String[] strings = new String[]{"apple3", "apple2", "apple1"};
+        Arrays.sort(strings, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.length() == o2.length()) {
+                    return o1.compareTo(o2);
+                }
+                return o1.length() - o2.length();
+            }
+        });
+        assertThat(strings).isEqualTo(new String[]{"apple1", "apple2", "apple3"});
+    }
+
+    @Test
+    void 람다를_이용해서_sort_커스터마이징() {
+        String[] strings = new String[]{"apple3", "apple2", "apple1"};
+        Arrays.sort(strings, (o1, o2) -> {
+            if (o1.length() == o2.length()) {
+                return o1.compareTo(o2);
+            }
+            return o1.length() - o2.length();
+        });
+        assertThat(strings).isEqualTo(new String[]{"apple1", "apple2", "apple3"});
+    }
+
+    @Test
+    void 람다를_이용해서_collection_sort_커스터마이징() {
+        ArrayList<String> strings = new ArrayList<>(List.of("apple3", "apple2", "apple1"));
+        Collections.sort(strings, (o1, o2) -> {
+            if (o1.length() == o2.length()) {
+                return o1.compareTo(o2);
+            }
+            return o1.length() - o2.length();
+        });
+        assertThat(strings).isEqualTo(List.of("apple1", "apple2", "apple3"));
     }
 }
