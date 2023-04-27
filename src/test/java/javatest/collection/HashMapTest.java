@@ -51,4 +51,28 @@ public class HashMapTest {
         assertThat(hashMap.get("oop")).isEqualTo(2);
         assertThat(hashMap.get("ddd")).isEqualTo(2);
     }
+
+    @Test
+    void 순서를_보장하지않음() {
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("hello", 23);
+        hashMap.put(", ", 22);
+        hashMap.put("world!", 321);
+        StringBuilder sb = new StringBuilder();
+        for(String key : hashMap.keySet()) {
+            sb.append(key);
+        }
+
+        assertThat(sb.toString()).isNotEqualTo("hello, world!");
+    }
+
+    @Test
+    void putIfAbsent_값이_존재하지_않으면_설정한다() throws Exception {
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        assertThat(hashMap.get("temp")).isNull();
+        hashMap.putIfAbsent("temp", 2);
+        assertThat(hashMap.get("temp")).isEqualTo(2);
+        assertThat(hashMap.putIfAbsent("temp", 3)).isEqualTo(2);
+        assertThat(hashMap.get("temp")).isEqualTo(2);
+    }
 }
