@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -111,5 +112,25 @@ class ArrayTest {
         List<String> list = Arrays.asList(strings);
         assertThat(list.size()).isEqualTo(2);
         assertThat(list.get(1)).isEqualTo("temp");
+    }
+
+    @Test
+    void 배열_max() {
+        Integer[] integers = new Integer[]{6, 1, 2, 3, 4, 5, 7};
+        int max = Arrays.stream(integers)
+            .max(Comparator.naturalOrder())
+            .orElseThrow();
+
+        assertThat(max).isEqualTo(7);
+    }
+
+    @Test
+    void 배열_min() {
+        Integer[] integers = new Integer[]{6, 1, 2, 3, 4, 5, 7};
+        int min = Arrays.stream(integers)
+            .min(Comparator.naturalOrder())
+            .orElseThrow();
+
+        assertThat(min).isEqualTo(1);
     }
 }
