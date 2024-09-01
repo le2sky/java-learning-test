@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 class ArraysSortTest {
@@ -23,6 +24,18 @@ class ArraysSortTest {
         int[] ints = {6, 3, 2, 1, 4, 5, 7};
         Arrays.sort(ints, 1, 4);
         assertThat(ints).isEqualTo(new int[]{6, 1, 2, 3, 4, 5, 7});
+    }
+
+    @Test
+    void primitive_type_배열_역순_정렬() {
+        int[] ints = {6, 3, 2, 1, 4, 5, 7};
+        int[] result = IntStream.of(ints)
+                .boxed()
+                .sorted(Collections.reverseOrder())
+                .mapToInt(it -> it)
+                .toArray();
+
+        assertThat(result).isEqualTo(new int[]{7, 6, 5, 4, 3, 2, 1});
     }
 
     @Test
